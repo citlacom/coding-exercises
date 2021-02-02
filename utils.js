@@ -1,3 +1,9 @@
+/**
+ * Shallow check wether object is empty or not.
+ *
+ * @param {Object} object Object to check.
+ * @returns {boolean} True when is empty, false otherwise.
+ */
 const isEmpty = (object) => {
   let allPropertiesEmpty = true;
 
@@ -25,6 +31,12 @@ console.log("Data sample 2: ", isEmpty(emptyDataSample2));
 console.log("Data sample 3: ", isEmpty(emptyDataSample3));
 console.log("Data sample 4: ", isEmpty(emptyDataSample4));
 
+/**
+ * Transform deep array into plain array.
+ *
+ * @param {Array} array A deep array.
+ * @returns {Array} Plain array compound by all nested array values.
+ */
 const flatten = (array) => {
   flatArray = [];
 
@@ -59,6 +71,15 @@ console.log("Flatten sample 3: ", flatten(flattenDataSample3));
 console.log("Flatten sample 4: ", flatten(flattenDataSample4));
 console.log("Flatten sample 5: ", flatten(flattenDataSample5));
 
+/**
+ * Invoke an array method within child element located by a given path.
+ *
+ * @param {Object} object An object that should contain child array.
+ * @param {string} [path=""] The keys path where array to invoke function is located.
+ * @param {string} [func=""] An array function name to invoke.
+ * @param {Array} [args=[]] Arguments to pass into invoked array function.
+ * @returns {Any} Invoked function output.
+ */
 const invoke = (object, path = "", func = "", args = []) => {
   const resolvePathData = (path) => {
     const pathParts = path.split(".");
