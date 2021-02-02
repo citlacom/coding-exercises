@@ -58,3 +58,59 @@ console.log("Flatten sample 2: ", flatten(flattenDataSample2));
 console.log("Flatten sample 3: ", flatten(flattenDataSample3));
 console.log("Flatten sample 4: ", flatten(flattenDataSample4));
 console.log("Flatten sample 5: ", flatten(flattenDataSample5));
+
+const invoke = (object, path = "", func = "", args = []) => {
+  const resolvePathData = (path) => {
+    const pathParts = path.split(".");
+    let idx = 0;
+    const depth = pathParts.length;
+
+    while (object !== null && idx < depth) {
+      const key = `${pathParts[idx]}`;
+      object = object[key];
+      idx++;
+    }
+
+    if (idx !== depth) {
+      return undefined;
+    }
+
+    return object;
+  };
+
+  if (typeof object !== "object" || object === null) {
+    throw new Error("Invalid object input");
+  }
+
+  const objectPathData = resolvePathData(path);
+  const arrayFunc = objectPathData ? objectPathData[func] : null;
+
+  if (!arrayFunc) {
+    return undefined;
+  }
+
+  return arrayFunc.apply(objectPathData, args);
+};
+
+const invokeDataSample1 = { a: { b: [1, 2, 3] } };
+const invokeDataSample2 = { a: { b: { c: [30, 45, 60, 90] } } };
+
+console.log(
+  "Invoke sample 1: ",
+  invoke(invokeDataSample1, "a.b", "splice", [1, 2]),
+);
+
+console.log(
+  "Invoke sample 2: ",
+  invoke(invokeDataSample2, "a.b.c", "join", ["-"]),
+);
+
+console.log(
+  "Invoke sample 2B: ",
+  invoke(invokeDataSample2, "a.b.c", "invalid", ["-"]),
+);
+
+console.log(
+  "Invoke sample 2C: ",
+  invoke(invokeDataSample2, "a.b.d", "invalid", ["-"]),
+);
