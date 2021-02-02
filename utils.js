@@ -10,12 +10,46 @@ const isEmpty = (object) => {
   return allPropertiesEmpty;
 };
 
-const dataSample1 = { a: 1, b: undefined };
-const dataSample2 = { a: undefined };
-const dataSample3 = { a: { aa: undefined } };
-const dataSample4 = {};
+const emptyDataSample1 = { a: 1, b: undefined };
+const emptyDataSample2 = { a: undefined };
+const emptyDataSample3 = { a: { aa: undefined } };
+const emptyDataSample4 = {};
 
-console.log("Data sample 1: ", isEmpty(dataSample1));
-console.log("Data sample 2: ", isEmpty(dataSample2));
-console.log("Data sample 3: ", isEmpty(dataSample3));
-console.log("Data sample 4: ", isEmpty(dataSample4));
+console.log("Data sample 1: ", isEmpty(emptyDataSample1));
+console.log("Data sample 2: ", isEmpty(emptyDataSample2));
+console.log("Data sample 3: ", isEmpty(emptyDataSample3));
+console.log("Data sample 4: ", isEmpty(emptyDataSample4));
+
+const flatten = (array) => {
+  flatArray = [];
+
+  if (!Array.isArray(array)) {
+    return [];
+  }
+
+  const itemFlatten = (items) => {
+    for (const item of items) {
+      if (Array.isArray(item)) {
+        itemFlatten(item);
+      } else if (typeof item !== "object") {
+        flatArray.push(item);
+      }
+    }
+  };
+
+  itemFlatten(array);
+
+  return flatArray;
+};
+
+const flattenDataSample1 = [1, 2, [3, 4, [5]]];
+const flattenDataSample2 = [1, 2, [3, 4, [{ a: 1 }, { b: 2 }]]];
+const flattenDataSample3 = {};
+const flattenDataSample4 = null;
+const flattenDataSample5 = [false, [true, [false, undefined]]];
+
+console.log("Flatten sample 1: ", flatten(flattenDataSample1));
+console.log("Flatten sample 2: ", flatten(flattenDataSample2));
+console.log("Flatten sample 3: ", flatten(flattenDataSample3));
+console.log("Flatten sample 4: ", flatten(flattenDataSample4));
+console.log("Flatten sample 5: ", flatten(flattenDataSample5));
