@@ -1,5 +1,10 @@
 const isEmpty = (object) => {
   let allPropertiesEmpty = true;
+
+  if (typeof object !== "object" || object === null) {
+    throw new Error("Invalid object input");
+  }
+
   Object.keys(object).every((key) => {
     const hasValue = !!object[key];
     if (hasValue) {
@@ -31,7 +36,7 @@ const flatten = (array) => {
     for (const item of items) {
       if (Array.isArray(item)) {
         itemFlatten(item);
-      } else if (typeof item !== "object") {
+      } else if (typeof item !== "object" || item === null) {
         flatArray.push(item);
       }
     }
@@ -46,7 +51,7 @@ const flattenDataSample1 = [1, 2, [3, 4, [5]]];
 const flattenDataSample2 = [1, 2, [3, 4, [{ a: 1 }, { b: 2 }]]];
 const flattenDataSample3 = {};
 const flattenDataSample4 = null;
-const flattenDataSample5 = [false, [true, [false, undefined]]];
+const flattenDataSample5 = [false, [true, [false, undefined, null]]];
 
 console.log("Flatten sample 1: ", flatten(flattenDataSample1));
 console.log("Flatten sample 2: ", flatten(flattenDataSample2));
